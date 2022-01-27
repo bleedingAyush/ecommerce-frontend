@@ -33,8 +33,6 @@ const styles = {
   },
 };
 
-//  Bug: reduce the mobile padding
-
 const Nav = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchBoxStyle, setSearchBoxStyle] = useState<boolean>(false);
