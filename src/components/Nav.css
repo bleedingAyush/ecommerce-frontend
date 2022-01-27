@@ -4,10 +4,9 @@ nav {
   justify-content: space-between;
   margin: auto;
   padding: 0px 3rem 0px 3rem;
-  /* padding: 0px 3.125rem 0px 3.125rem; */
 }
 
-.nav-links {
+.nav-menu {
   display: flex;
   color: rgb(31, 30, 30);
   align-items: center;
@@ -18,7 +17,7 @@ h1 {
   color: rgb(31, 30, 30);
 }
 
-.links {
+.nav-item {
   list-style: none;
   align-items: center;
   color: rgb(14, 13, 13);
@@ -71,7 +70,7 @@ h1 {
   font-size: 8px;
 }
 
-.contents {
+.search-content {
   font-size: 10px;
 }
 
@@ -150,14 +149,12 @@ h1 {
   border: none;
 }
 
-.side-menu button:hover {
-  cursor: pointer;
+.nav-text-links-content {
+  display: flex;
 }
 
-.side-menu button:focus + .dropdown {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+.side-menu button:hover {
+  cursor: pointer;
 }
 
 .dropdown > .Link-dropdown {
@@ -188,13 +185,39 @@ h1 {
   }
 }
 
-@media (max-width: 980px) {
-  .route-link {
-    /* display: none; */
-  }
-  .side-menu:focus + ul {
-    background-color: #3a3a3a;
-    height: 100%;
+@media (max-width: 998px) {
+  .nav-text-links-content {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
     width: 100%;
+    height: 90vh;
+    position: absolute;
+    top: 5rem;
+    left: -100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  .side-menu-button {
+    border: none;
+    background-color: transparent;
+  }
+
+  .side-menu-button:hover {
+    cursor: pointer;
+  }
+
+  .route-link {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .top-link::after {
+    width: 0%;
+  }
+
+  .active-link > li {
+    color: #616060;
   }
 }
