@@ -37,9 +37,9 @@ const styles = {
 
 const Nav = () => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchBoxStyle, setSearchBoxStyle] = useState<object>({});
+  const [searchBoxStyle, setSearchBoxStyle] = useState<boolean>(false);
   const [mediumDevices, setMediumDevices] = useState<boolean>(false);
-  const [navContentStyles, setNavContentStyles] = useState<object>({});
+  const [navContentStyles, setNavContentStyles] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   function changeText(e: React.ChangeEvent<HTMLInputElement>) {
@@ -47,15 +47,15 @@ const Nav = () => {
   }
 
   useEffect(() => {
-    if (searchValue.length > 0) setSearchBoxStyle(styles.searchStyle);
-    else setSearchBoxStyle({});
+    if (searchValue.length > 0) setSearchBoxStyle(true);
+    else setSearchBoxStyle(false);
   }, [searchValue]);
 
   const checksDeviceWidth = useCallback(() => {
     if (window.innerWidth <= 998) {
       setMediumDevices(true);
     } else {
-      setNavContentStyles({});
+      setNavContentStyles(false);
       setIsFocused(false);
       setMediumDevices(false);
     }
@@ -71,11 +71,9 @@ const Nav = () => {
   }, [mediumDevices, checksDeviceWidth]);
 
   const toggleSideMenu = () => {
-    if (mediumDevices) {
-      let keyLength = Object.keys(navContentStyles).length;
-      if (!keyLength) setNavContentStyles(styles.navStyles);
-      else setNavContentStyles({});
-    }
+    if (!mediumDevices) return;
+    if (!navContentStyles) setNavContentStyles(true);
+    else setNavContentStyles(false);
   };
 
   const showDropdown = () => {
@@ -99,7 +97,10 @@ const Nav = () => {
         <h1>tarlet</h1>
       </Link>
       <ul className="nav-menu">
-        <div style={navContentStyles} className="nav-text-links-content">
+        <div
+          style={navContentStyles ? styles.navStyles : {}}
+          className="nav-text-links-content"
+        >
           <NavLink
             activeClassName="active-link"
             to={"/shop"}
@@ -133,7 +134,7 @@ const Nav = () => {
           <input
             type={"text"}
             placeholder="search"
-            style={searchBoxStyle}
+            style={searchBoxStyle ? styles.searchStyle : {}}
             className="search-input"
             value={searchValue}
             onChange={changeText}
