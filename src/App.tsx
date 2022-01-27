@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 import About from "./components/About";
-// import Nav from "./components/Nav";
+import Nav from "./components/Nav";
 import Shop from "./components/Shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import DemoNav from "./components/DemoNav";
+// import DemoNav from "./components/DemoNav";
 
 function App() {
   // const [value, setValue] = useState<string[]>([]);
@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <DemoNav />
+        <Nav />
         <Switch>
           <Route exact path={"/"} component={Home} />
           <Route path={"/about"} component={About} />
