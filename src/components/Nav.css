@@ -221,3 +221,25 @@ h1 {
     color: #616060;
   }
 }
+
+@media (max-width: 600px) {
+  nav {
+    padding: 0px 1rem 0px 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .nav-item {
+    padding: 0px 1.6rem 0px 1.6rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .searchBox:hover > .search-input {
+    width: 7rem;
+    padding: 0.5rem;
+    padding-right: 2rem;
+    background-color: rgb(240, 245, 248);
+    box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
+  }
+}
