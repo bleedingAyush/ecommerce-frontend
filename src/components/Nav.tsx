@@ -13,9 +13,11 @@ import ShoppingBag from "./ShoppingBag";
 const styles = {
   navStyles: {
     background: "#eeeeee",
-    left: "0%",
+    // left: "0%",
+    "-webkit-transform": "translateX(0%)",
+    transform: "translateX(0%)",
     opacity: "1",
-    transition: "all 0.5s ease",
+    transition: "all 300ms ease",
     boxShadow: " 0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
     zIndex: 1,
   },
