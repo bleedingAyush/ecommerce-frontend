@@ -11,27 +11,12 @@ import "./Nav.css";
 import ShoppingBag from "./ShoppingBag";
 
 const styles = {
-  navStyles: {
-    background: "#eeeeee",
-    // left: "0%",
-    "-webkit-transform": "translateX(0%)",
-    transform: "translateX(0%)",
-    opacity: "1",
-    transition: "all 300ms ease",
-    boxShadow: " 0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
-    zIndex: 1,
-  },
   searchStyle: {
-    width: "8rem",
-    padding: "0.5rem",
-    paddingRight: "2rem",
-    backgroundColor: "rgb(240, 245, 248)",
-    boxShadow: "0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2)",
-  },
-  dropDownStyles: {
-    opacity: "1",
-    pointerevents: "auto",
-    transform: "translateY(0)",
+    // width: "8rem",
+    // padding: "0.5rem",
+    // paddingRight: "2rem",
+    // backgroundColor: "rgb(240, 245, 248)",
+    // boxShadow: "0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2)",
   },
 };
 
@@ -39,11 +24,17 @@ const Nav = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchBoxStyle, setSearchBoxStyle] = useState<boolean>(false);
   const [mediumDevices, setMediumDevices] = useState<boolean>(false);
-  const [navContentStyles, setNavContentStyles] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const hamburgerButton = document.querySelector(".side-menu-button");
 
   function changeText(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
+  }
+  function laptopClass() {
+    if (window.innerWidth < 988) return;
+    hamburgerButton?.classList.add("computer");
+  }
+  function removelaptopClass() {
+    hamburgerButton?.classList.remove("computer");
   }
 
   useEffect(() => {
@@ -53,10 +44,9 @@ const Nav = () => {
 
   const checksDeviceWidth = useCallback(() => {
     if (window.innerWidth <= 998) {
+      console.log("innerwidth");
       setMediumDevices(true);
     } else {
-      setNavContentStyles(false);
-      setIsFocused(false);
       setMediumDevices(false);
     }
   }, []);
@@ -71,24 +61,10 @@ const Nav = () => {
   }, [mediumDevices, checksDeviceWidth]);
 
   const toggleSideMenu = () => {
-    if (!mediumDevices) return;
-    if (!navContentStyles) setNavContentStyles(true);
-    else setNavContentStyles(false);
-  };
-
-  const showDropdown = () => {
-    if (!isFocused) setIsFocused(true);
-  };
-
-  const hideDropdown = () => {
-    if (isFocused) setIsFocused(false);
-  };
-
-  const runningOnFocus = (val: string) => {
-    console.log("innerwidth", window.innerWidth, val);
-    if (mediumDevices) return;
-    if (val == "focused") showDropdown();
-    else hideDropdown();
+    if (mediumDevices) {
+      const links = document.querySelector(".nav-text-links-content");
+      links?.classList.toggle("mobiles");
+    }
   };
 
   return (
@@ -97,10 +73,7 @@ const Nav = () => {
         <h1>tarlet</h1>
       </Link>
       <ul className="nav-menu">
-        <div
-          style={navContentStyles ? styles.navStyles : {}}
-          className="nav-text-links-content"
-        >
+        <div className="nav-text-links-content">
           <NavLink
             activeClassName="active-link"
             to={"/shop"}
@@ -152,8 +125,8 @@ const Nav = () => {
           className={mediumDevices ? "side-menu-medium active" : "side-menu"}
         >
           <button
-            onFocus={() => runningOnFocus("focused")}
-            onBlur={() => runningOnFocus("not focused")}
+            onFocus={laptopClass}
+            onBlur={removelaptopClass}
             className={"side-menu-button"}
             onClick={toggleSideMenu}
           >
@@ -163,10 +136,7 @@ const Nav = () => {
               height={"1.5rem"}
             />
           </button>
-          <div
-            className="dropdown"
-            style={isFocused ? styles.dropDownStyles : {}}
-          >
+          <div className="dropdown">
             <Link to="/shop" className="Link-dropdown">
               <User />
               <span>Account</span>

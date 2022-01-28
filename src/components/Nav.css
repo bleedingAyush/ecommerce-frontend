@@ -77,6 +77,8 @@ h1 {
 .search-input {
   width: 0rem;
   /* width: 15rem; */
+  transform: scaleX(8rem);
+  transform: translateX(-100px);
   background-color: transparent;
   /* padding: 8px; */
   padding: 0.5rem;
@@ -84,7 +86,18 @@ h1 {
   border-radius: 2rem;
   border: none;
   outline: none;
+  transition: scale(0, 1);
   transition: 0.2s;
+}
+
+.searchBox:hover > .search-input {
+  /* width: 8rem; */
+  transform: scaleX(3);
+  transform: translateY(0);
+  padding: 0.5rem;
+  padding-right: 2rem;
+  background-color: rgb(240, 245, 248);
+  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
 }
 
 .searchSvg {
@@ -93,17 +106,6 @@ h1 {
   transition: 0.3s;
   display: grid;
   place-items: center;
-}
-
-/* .search-input:focus {
-  outline: none;
-} */
-.searchBox:hover > .search-input {
-  width: 8rem;
-  padding: 0.5rem;
-  padding-right: 2rem;
-  background-color: rgb(240, 245, 248);
-  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
 }
 
 .cart-total {
@@ -157,6 +159,12 @@ h1 {
   cursor: pointer;
 }
 
+.side-menu-button.computer:focus + .dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .dropdown > .Link-dropdown {
   overflow: hidden;
   position: relative;
@@ -199,6 +207,16 @@ h1 {
     transform: translateX(-100%);
     opacity: 0;
     transition: all 300ms ease;
+    will-change: transform;
+  }
+  .nav-text-links-content.mobiles {
+    background: #eeeeee;
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+    opacity: 1;
+    transition: all 300ms ease;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
   }
 
   .side-menu-button {
