@@ -9,7 +9,7 @@ import Home from "./components/Home";
 
 function App() {
   // const [value, setValue] = useState<string[]>([]);
-
+  <Nav />;
   return (
     <Router>
       <div className="App">
