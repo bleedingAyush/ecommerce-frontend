@@ -10,66 +10,46 @@ import {
 import "./Nav.css";
 import ShoppingBag from "./ShoppingBag";
 
-const styles = {
-  searchStyle: {
-    // width: "8rem",
-    // padding: "0.5rem",
-    // paddingRight: "2rem",
-    // backgroundColor: "rgb(240, 245, 248)",
-    // boxShadow: "0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2)",
-  },
-};
-
 const Nav = () => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchBoxStyle, setSearchBoxStyle] = useState<boolean>(false);
-  const [mediumDevices, setMediumDevices] = useState<boolean>(false);
-  const hamburgerButton = document.querySelector(".side-menu-button");
 
   function changeText(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
   }
   function laptopClass() {
     if (window.innerWidth < 988) return;
+    const hamburgerButton = document.querySelector(".side-menu-button");
     hamburgerButton?.classList.add("computer");
   }
+
   function removelaptopClass() {
+    if (window.innerWidth < 988) return;
+    const hamburgerButton = document.querySelector(".side-menu-button");
+
     hamburgerButton?.classList.remove("computer");
   }
 
-  useEffect(() => {
-    if (searchValue.length > 0) setSearchBoxStyle(true);
-    else setSearchBoxStyle(false);
-  }, [searchValue]);
-
-  const checksDeviceWidth = useCallback(() => {
-    if (window.innerWidth <= 998) {
-      console.log("innerwidth");
-      setMediumDevices(true);
-    } else {
-      setMediumDevices(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", checksDeviceWidth);
-    window.addEventListener("load", checksDeviceWidth);
-    return () => {
-      window.removeEventListener("load", checksDeviceWidth);
-      window.removeEventListener("resize", checksDeviceWidth);
-    };
-  }, [mediumDevices, checksDeviceWidth]);
-
   const toggleSideMenu = () => {
-    if (mediumDevices) {
-      const links = document.querySelector(".nav-text-links-content");
-      links?.classList.toggle("mobiles");
+    if (window.innerWidth > 988) return;
+    const links = document.querySelector(".nav-text-links-content");
+    const isActive = links?.classList.contains("mobiles");
+
+    if (isActive) {
+      links?.classList.remove("mobiles");
+    } else {
+      links?.classList.add("mobiles");
     }
+  };
+
+  const removeMobilesClass = () => {
+    if (window.innerWidth > 988) return;
+    const links = document.querySelector(".nav-text-links-content");
+    links?.classList.remove("mobiles");
   };
 
   return (
     <nav>
-      <Link to={"/"} className="Link">
+      <Link to={"/"} className="Link" onClick={removeMobilesClass}>
         <h1>tarlet</h1>
       </Link>
       <ul className="nav-menu">
@@ -78,6 +58,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/shop"}
             className="Link route-link"
+            onClick={removeMobilesClass}
           >
             <li className="nav-item top-link">Shop</li>
           </NavLink>
@@ -85,6 +66,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/journal"}
             className="Link route-link"
+            onClick={removeMobilesClass}
           >
             <li className="nav-item top-link">Journal</li>
           </NavLink>
@@ -92,6 +74,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/aboutus"}
             className="Link route-link"
+            onClick={removeMobilesClass}
           >
             <li className="nav-item top-link">About us</li>
           </NavLink>
@@ -99,6 +82,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/contact"}
             className="Link route-link"
+            onClick={removeMobilesClass}
           >
             <li className="nav-item top-link">Contact</li>
           </NavLink>
@@ -107,11 +91,14 @@ const Nav = () => {
           <input
             type={"text"}
             placeholder="search"
-            style={searchBoxStyle ? styles.searchStyle : {}}
             className="search-input"
             value={searchValue}
             onChange={changeText}
           />
+
+          <div className="search-left"></div>
+          <div className="search-center"></div>
+          <div className="search-right"></div>
           <Search className="searchSvg" width={"1.25rem"} height={"1.25rem"} />
         </div>
         <Link to={"/conta"} className="Link shopping-bag">
@@ -121,9 +108,7 @@ const Nav = () => {
           />
           <span className="cart-total">5</span>
         </Link>
-        <div
-          className={mediumDevices ? "side-menu-medium active" : "side-menu"}
-        >
+        <div className="side-menu">
           <button
             onFocus={laptopClass}
             onBlur={removelaptopClass}

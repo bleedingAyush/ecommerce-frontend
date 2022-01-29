@@ -1,3 +1,7 @@
 .App {
-  /* text-align: center; */
+}
+
+:root {
+  overflow-x: hidden;
+  box-sizing: border-box;
 }

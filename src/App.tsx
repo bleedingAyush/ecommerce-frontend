@@ -4,6 +4,7 @@ import About from "./components/About";
 import Nav from "./components/Nav";
 import Shop from "./components/Shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./components/Home";
 // import DemoNav from "./components/DemoNav";
 
 function App() {
@@ -24,11 +25,3 @@ function App() {
 }
 
 export default App;
-
-const Home = () => {
-  return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
-  );
-};

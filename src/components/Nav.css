@@ -47,6 +47,7 @@ h1 {
   bottom: -10px;
   transform: scale(0, 1);
   transition: 0.3s;
+  will-change: transform;
 }
 
 .top-link:hover::after {
@@ -74,28 +75,54 @@ h1 {
   font-size: 10px;
 }
 
+.search-left,
+.search-center,
+.search-right {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 9;
+}
+
+.search-left {
+  background: aliceblue;
+}
+
+.search-center {
+  background-color: hotpink;
+}
+
+.search-right {
+  background-color: maroon;
+}
+
+.search-left {
+  border-radius: 20px 0 0 20px;
+}
+.search-right {
+  border-radius: 0 20px 20px 0;
+}
+
+.search-center {
+  left: 20px;
+  width: 1px;
+  transform: scale(60);
+  transform-origin: left;
+}
+
+.search-right {
+  transform: translateX(80px);
+}
+
 .search-input {
-  width: 0rem;
-  /* width: 15rem; */
-  transform: scaleX(8rem);
-  transform: translateX(-100px);
+  width: 8rem;
   background-color: transparent;
-  /* padding: 8px; */
   padding: 0.5rem;
   padding-right: 2rem;
   border-radius: 2rem;
   border: none;
   outline: none;
-  transition: scale(0, 1);
   transition: 0.2s;
-}
-
-.searchBox:hover > .search-input {
-  /* width: 8rem; */
-  transform: scaleX(3);
-  transform: translateY(0);
-  padding: 0.5rem;
-  padding-right: 2rem;
   background-color: rgb(240, 245, 248);
   box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
 }
@@ -194,29 +221,34 @@ h1 {
 }
 
 @media (max-width: 998px) {
+  .dropdown {
+    display: none;
+  }
   .nav-text-links-content {
     position: absolute;
     display: flex;
     gap: 20px;
     flex-direction: column;
-    width: 100%;
-    height: 85vh;
+    width: 40%;
+    height: 87vh;
     top: 5rem;
-    left: 0;
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
+    right: 0;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
     opacity: 0;
     transition: all 300ms ease;
     will-change: transform;
+    z-index: 1;
+    border-radius: 4px 0px 0px 4px;
   }
+
   .nav-text-links-content.mobiles {
-    background: #eeeeee;
+    background: #f7f4f4;
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
     opacity: 1;
     transition: all 300ms ease;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
   }
 
   .side-menu-button {
