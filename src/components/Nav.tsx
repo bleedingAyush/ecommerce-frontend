@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   BarChart,
@@ -11,7 +11,6 @@ import "./Nav.css";
 import ShoppingBag from "./ShoppingBag";
 
 const Nav = () => {
-  // d
   const [searchValue, setSearchValue] = useState<string>("");
 
   function changeText(e: React.ChangeEvent<HTMLInputElement>) {
@@ -62,7 +61,7 @@ const Nav = () => {
             className="Link route-link"
             onClick={removeMobilesClass}
           >
-            <li className="nav-item top-link">Shop</li>
+            <li className="nav-item nav-link">Shop</li>
           </NavLink>
           <NavLink
             activeClassName="active-link"
@@ -70,7 +69,7 @@ const Nav = () => {
             className="Link route-link"
             onClick={removeMobilesClass}
           >
-            <li className="nav-item top-link">Journal</li>
+            <li className="nav-item nav-link">Journal</li>
           </NavLink>
           <NavLink
             activeClassName="active-link"
@@ -78,7 +77,7 @@ const Nav = () => {
             className="Link route-link"
             onClick={removeMobilesClass}
           >
-            <li className="nav-item top-link">About us</li>
+            <li className="nav-item nav-link">About us</li>
           </NavLink>
           <NavLink
             activeClassName="active-link"
@@ -86,7 +85,7 @@ const Nav = () => {
             className="Link route-link"
             onClick={removeMobilesClass}
           >
-            <li className="nav-item top-link">Contact</li>
+            <li className="nav-item nav-link">Contact</li>
           </NavLink>
         </div>
         <div className="searchBox">
