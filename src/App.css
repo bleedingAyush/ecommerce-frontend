@@ -4,17 +4,6 @@
   box-sizing: border-box;
 }
 
-.App {
-  /* box-sizing: border-box; */
-}
-
 :root {
-  /* overflow-x: hidden; */
-  position: relative;
-  width: 100%;
   overflow-x: hidden;
 }
-/* html,
-body {
-  overflow-x: hidden;
-} */
