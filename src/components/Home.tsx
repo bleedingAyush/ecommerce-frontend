@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Search } from "react-feather";
+// import "./Home.css";
 
 const Home = () => {
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
-  );
+  const [medium, setState] = useState();
+  return <div></div>;
 };
 
 export default Home;

@@ -1,0 +1,38 @@
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+a:hover,
+a {
+  text-decoration: none;
+  color: rgb(37, 37, 37);
+}
+
+.search-box {
+  position: relative;
+}
+
+.searchText {
+  width: 15rem;
+  border-radius: 5rem;
+  outline: none;
+  border: none;
+  background-color: antiquewhite;
+  transition: all 0.2s linear;
+}
+
+.searchbtn {
+  width: 3rem;
+  height: 3rem;
+  right: 1rem;
+  background-color: #112b6e;
+  color: #fff;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border-radius: 5rem;
+  box-shadow: 0px 10px 0px 10px rgb(37, 37, 37, 0.2);
+}

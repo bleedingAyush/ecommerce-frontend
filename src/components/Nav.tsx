@@ -11,12 +11,15 @@ import "./Nav.css";
 import ShoppingBag from "./ShoppingBag";
 
 const Nav = () => {
+  // d
   const [searchValue, setSearchValue] = useState<string>("");
 
   function changeText(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
   }
+
   function laptopClass() {
+    console.log(window.innerWidth);
     if (window.innerWidth < 988) return;
     const hamburgerButton = document.querySelector(".side-menu-button");
     hamburgerButton?.classList.add("computer");
@@ -25,7 +28,6 @@ const Nav = () => {
   function removelaptopClass() {
     if (window.innerWidth < 988) return;
     const hamburgerButton = document.querySelector(".side-menu-button");
-
     hamburgerButton?.classList.remove("computer");
   }
 
@@ -95,15 +97,11 @@ const Nav = () => {
             value={searchValue}
             onChange={changeText}
           />
-
-          <div className="search-left"></div>
-          <div className="search-center"></div>
-          <div className="search-right"></div>
           <Search className="searchSvg" width={"1.25rem"} height={"1.25rem"} />
         </div>
         <Link to={"/conta"} className="Link shopping-bag">
           <ShoppingBag
-            className="nav-item"
+            className="nav-item shop-bag"
             style={{ color: "#3a3a3a", display: "grid" }}
           />
           <span className="cart-total">5</span>

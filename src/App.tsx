@@ -5,11 +5,10 @@ import Nav from "./components/Nav";
 import Shop from "./components/Shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
-// import DemoNav from "./components/DemoNav";
 
 function App() {
   // const [value, setValue] = useState<string[]>([]);
-  <Nav />;
+
   return (
     <Router>
       <div className="App">

@@ -207,20 +207,20 @@ h1 {
     gap: 20px;
     flex-direction: column;
     width: 40%;
-    height: 93vh;
+    height: 87vh;
     top: 5rem;
     right: 0;
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
     opacity: 0;
     transition: all 300ms ease;
-    /* will-change: transform; */
+    will-change: transform;
     z-index: 1;
     border-radius: 4px 0px 0px 4px;
   }
 
   .nav-text-links-content.mobiles {
-    background: #f8f8f8;
+    background: #f7f4f4;
     -webkit-transform: translateX(0%);
     transform: translateX(0%);
     opacity: 1;
@@ -268,9 +268,9 @@ h1 {
 }
 
 @media (max-width: 450px) {
-  /* .nav-item {
+  .nav-item {
     padding: 0px 1.6rem 0px 1.6rem;
-  } */
+  }
 }
 
 @media (max-width: 380px) {
