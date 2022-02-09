@@ -1,0 +1,18 @@
+.carousel-container {
+  display: flex;
+  width: 60%;
+  height: 100%;
+  margin: auto;
+  overflow-x: auto;
+}
+
+.carousel-slide {
+  display: flex;
+  border: 5px solid #000;
+  width: 65%;
+}
+
+.images {
+  height: 20rem;
+  width: 40vw;
+}
