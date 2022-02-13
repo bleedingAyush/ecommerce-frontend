@@ -4,30 +4,30 @@ import "./Carousel.css";
 import Images from "./Images";
 
 interface Values {
-  isDragging: boolean;
   currentTranslate: number;
-  prevTranslate: number;
-  animationID: number;
-  currentIndex: number;
-  startPos: number;
+}
+
+interface TransformStyles {
+  transform: string;
+  transition: string;
 }
 
 const images = [Images.first, Images.second, Images.third, Images.fourth];
 
-const Carousel = () => {
-  const [margining, setMargining] = useState<string>("0%");
-  const [styles, setStyles] = useState({
-    translateX: "",
+const styles = {
+  transformStyles: {
     transform: "",
-  });
+    transition: "",
+  },
+};
+
+const Carousel = () => {
+  const [transformStyles, setTransformStyles] = useState<TransformStyles>(
+    styles.transformStyles
+  );
   const [current, setCurrent] = useState(0);
   const [values, setValues] = useState<Values>({
-    isDragging: false,
     currentTranslate: 0,
-    prevTranslate: 0,
-    animationID: 0,
-    currentIndex: 0,
-    startPos: 0,
   });
 
   const firstSlide = () => {
@@ -43,146 +43,176 @@ const Carousel = () => {
     setCurrent(3);
   };
 
-  useEffect(
-    () => {
-      const innerContainer: any = document.querySelector(".inner");
+  useEffect(() => {
+    const innerContainer: any = document.querySelector(".inner");
 
-      let isDragging = false,
-        startPos = 0,
-        currentTranslate = 0,
-        prevTranslate = 0,
-        animationID = 0,
-        transformValue: any = 0,
-        transform: any = 0,
-        lastPageX: any = 0,
-        currentIndex = 0;
+    let isDragging = false,
+      startPos = 0,
+      currentTranslate = 0,
+      transformValue: any = 0,
+      transform: any = 0,
+      lastPageX: any = 0,
+      currentIndex = 0;
 
-      const touchEnd = (event: any) => {
-        if (isDragging) {
-          const currentPosition = getPosition(event);
-          const movedBy = currentPosition - startPos;
-
-          if (movedBy <= -100 && currentIndex < images.length - 1) {
-            setCurrent(currentIndex + 1);
-          } else if (movedBy >= 100 && currentIndex > 0) {
-            setCurrent(currentIndex - 1);
-          } else {
-            let cm = checkMargin(currentIndex);
-            setMargining(cm);
-            setStyles({
-              ...styles,
-              translateX: cm,
-              transform: "300ms ease-in-out",
-            });
-          }
+    const touchEnd = (event: any) => {
+      if (isDragging) {
+        const currentPosition = getPosition(event);
+        const movedBy = currentPosition - startPos;
+        const movement = checkMovement(movedBy);
+        console.log("movement", movement);
+        if (movement == "nextImage") {
+          setCurrent(currentIndex + 1);
+        } else if (movement == "previousImage") {
+          setCurrent(currentIndex - 1);
+        } else {
+          resetImagePosition();
         }
-        isDragging = false;
+      }
+      isDragging = false;
+    };
 
-        // setCurrent(currentIndex + 1);
+    const checkMovement = (movedBy: any) => {
+      if (movedBy <= -50 && currentIndex < images.length - 1) {
+        return "nextImage";
+      } else if (movedBy >= 50 && currentIndex > 0) {
+        return "previousImage";
+      }
+    };
+
+    const touchMove = (event: any) => {
+      if (!isDragging) return;
+      const currentPosition = getPosition(event);
+      currentTranslate = currentPosition - startPos;
+      transformValue = parseInt(transform) + currentTranslate;
+      const accessImageSwipe = checkAccessImageSwipe(currentPosition);
+      if (accessImageSwipe) return;
+      setValues((val) => {
+        return { ...val, currentTranslate: transformValue };
+      });
+      lastPageX = getPosition(event);
+    };
+
+    const touchStart = (index: number, img: any) => {
+      return function (event: any) {
+        isDragging = true;
+        startPos = getPosition(event);
+        currentIndex = index;
+        transform = getComputedTransformStyle();
       };
+    };
 
-      const touchMove = (event: any) => {
-        if (isDragging) {
-          const currentPosition = getPosition(event);
-          currentTranslate = currentPosition - startPos;
-          transformValue = parseInt(transform) + currentTranslate;
-          if (currentPosition - lastPageX > 0) {
-            if (transformValue > 0) {
-              return;
-            }
-          } else {
-            if (Math.abs(transformValue) > innerContainer.offsetWidth * 3) {
-              return;
-            }
-          }
-          setValues((val) => {
-            return { ...val, currentTranslate: transformValue };
-          });
-          lastPageX = getPosition(event);
+    const resetImagePosition = () => {
+      let cm = checkMargin(currentIndex);
+      let transformStyle = {
+        ...transformStyles,
+        transform: `translateX(${cm})`,
+        transition: "0.2s ease-out",
+      };
+      setTransformStyles(transformStyle);
+    };
+
+    const checkAccessImageSwipe = (currentPosition: any) => {
+      if (currentPosition - lastPageX > 0) {
+        // prevents going left in access for the first image
+
+        if (transformValue > 0) {
+          return true;
         }
-      };
+      } else {
+        // prevents going right in access for the second image
 
-      const touchStart = (index: number, img: any) => {
-        return function (event: any) {
-          isDragging = true;
-          startPos = getPosition(event);
-          currentIndex = index;
-          transform =
-            window
-              .getComputedStyle(innerContainer)
-              .getPropertyValue("transform") !== "none"
-              ? window
-                  .getComputedStyle(innerContainer)
-                  .getPropertyValue("transform")
-                  .split(",")[4]
-              : 0;
-        };
-      };
+        if (Math.abs(transformValue) > innerContainer.offsetWidth * 3) {
+          return true;
+        }
+      }
+      return false;
+    };
 
-      const getPosition = (event: MouseEvent & TouchEvent) => {
-        return event.type.includes("mouse")
-          ? event.pageX
-          : event.touches[0].clientX;
-      };
+    const getComputedTransformStyle = (): string | number => {
+      return window
+        .getComputedStyle(innerContainer)
+        .getPropertyValue("transform") !== "none"
+        ? window
+            .getComputedStyle(innerContainer)
+            .getPropertyValue("transform")
+            .split(",")[4]
+        : 0;
+    };
 
-      const ImagesSelector = document.querySelectorAll(".images");
-      ImagesSelector.forEach((firstImg, index) => {
-        firstImg?.addEventListener("dragstart", (e) => {
-          e.preventDefault();
-        });
+    const getPosition = (event: MouseEvent & TouchEvent) => {
+      console.log("event", event);
+      return event.type.includes("mouse")
+        ? event.pageX
+        : event.changedTouches[0].clientX;
+    };
 
-        firstImg?.addEventListener("touchstart", touchStart(index, firstImg));
-        firstImg?.addEventListener("touchmove", touchMove);
-        firstImg?.addEventListener("touchend", touchEnd);
-
-        firstImg?.addEventListener("mousedown", touchStart(index, firstImg));
-        firstImg?.addEventListener("mousemove", touchMove);
-        firstImg?.addEventListener("mouseleave", touchEnd);
-        firstImg?.addEventListener("mouseup", touchEnd);
+    const ImagesSelector = document.querySelectorAll(".images");
+    ImagesSelector.forEach((firstImg, index) => {
+      firstImg?.addEventListener("dragstart", (e) => {
+        e.preventDefault();
       });
 
-      return () => {
-        ImagesSelector.forEach((firstImg, index) => {
-          firstImg?.removeEventListener("dragstart", (e) => {
-            e.preventDefault();
-          });
-          firstImg?.removeEventListener(
-            "touchstart",
-            touchStart(index, firstImg)
-          );
-          firstImg?.removeEventListener("touchmove", touchMove);
-          firstImg?.removeEventListener("touchend", touchEnd);
-          firstImg?.removeEventListener(
-            "mousedown",
-            touchStart(index, firstImg)
-          );
-          firstImg?.removeEventListener("mousemove", touchMove);
-          firstImg?.removeEventListener("mouseleave", touchEnd);
-          firstImg?.removeEventListener("mouseup", touchEnd);
+      firstImg?.addEventListener("touchstart", touchStart(index, firstImg));
+      firstImg?.addEventListener("touchmove", touchMove);
+      firstImg?.addEventListener("touchend", touchEnd);
+
+      firstImg?.addEventListener("mousedown", touchStart(index, firstImg));
+      firstImg?.addEventListener("mousemove", touchMove);
+      firstImg?.addEventListener("mouseleave", touchEnd);
+      firstImg?.addEventListener("mouseup", touchEnd);
+    });
+
+    return () => {
+      ImagesSelector.forEach((firstImg, index) => {
+        firstImg?.removeEventListener("dragstart", (e) => {
+          e.preventDefault();
         });
-      };
-    },
-    [
-      // values.isDragging,
-      // values.currentTranslate,
-      // values.prevTranslate,
-      // values.startPos,
-    ]
-  );
+        firstImg?.removeEventListener(
+          "touchstart",
+          touchStart(index, firstImg)
+        );
+        firstImg?.removeEventListener("touchmove", touchMove);
+        firstImg?.removeEventListener("touchend", touchEnd);
+        firstImg?.removeEventListener("mousedown", touchStart(index, firstImg));
+        firstImg?.removeEventListener("mousemove", touchMove);
+        firstImg?.removeEventListener("mouseleave", touchEnd);
+        firstImg?.removeEventListener("mouseup", touchEnd);
+      });
+    };
+  }, []);
 
   useEffect(() => {
-    // console.log("values", values.currentTranslate);
-    // if (values.currentTranslate < 0) return;
-    // } else {
-    setMargining(`${values.currentTranslate}px`);
-    // }
+    setTransformStyles({
+      ...transformStyles,
+      transform: `translateX(${values.currentTranslate}px)`,
+      transition: "",
+    });
   }, [values.currentTranslate]);
 
   useEffect(() => {
     let m = checkMargin(current);
-    setMargining(m);
-    setStyles({ ...styles, translateX: m, transform: "300ms ease-in-out" });
+    setTransformStyles({
+      ...transformStyles,
+      transform: `translateX(${m})`,
+      transition: "0.2s ease-out",
+    });
   }, [current]);
+
+  useEffect(() => {
+    const updateSlider = () => {
+      setCurrent((val) => {
+        if (val < images.length - 1) {
+          return val + 1;
+        } else {
+          return 0;
+        }
+      });
+    };
+    let id = setInterval(updateSlider, 2000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   const checkMargin = (cases: number): string => {
     switch (cases) {
@@ -201,12 +231,7 @@ const Carousel = () => {
     <div className="carousel-container">
       <div className="carousel-slide">
         <div id="overflow">
-          <div
-            className="inner"
-            style={{
-              transform: `translateX(${margining})`,
-            }}
-          >
+          <div className="inner" style={transformStyles}>
             <img src={images[0]} alt="" className="images" />
             <img src={images[1]} alt="" className="images" />
             <img src={images[2]} alt="" className="images" />
@@ -241,9 +266,3 @@ const Carousel = () => {
 };
 
 export default Carousel;
-
-// {images.map((item, index) => {
-//   return (
-
-//   );
-// })}
