@@ -22,7 +22,6 @@ const styles = {
 };
 
 const Carousel = () => {
-  const [margining, setMargining] = useState<string>("0%");
   const [transformStyles, setTransformStyles] = useState<TransformStyles>(
     styles.transformStyles
   );
@@ -73,9 +72,9 @@ const Carousel = () => {
     };
 
     const checkMovement = (movedBy: any) => {
-      if (movedBy <= -100 && currentIndex < images.length - 1) {
+      if (movedBy <= -50 && currentIndex < images.length - 1) {
         return "nextImage";
-      } else if (movedBy >= 100 && currentIndex > 0) {
+      } else if (movedBy >= 50 && currentIndex > 0) {
         return "previousImage";
       }
     };
@@ -107,7 +106,7 @@ const Carousel = () => {
       let transformStyle = {
         ...transformStyles,
         transform: `translateX(${cm})`,
-        transition: "100ms ease-in-out",
+        transition: "0.2s ease-out",
       };
       setTransformStyles(transformStyle);
     };
@@ -145,7 +144,6 @@ const Carousel = () => {
       return event.type.includes("mouse")
         ? event.pageX
         : event.changedTouches[0].clientX;
-      // : event.touches[0].clientX;
     };
 
     const ImagesSelector = document.querySelectorAll(".images");
@@ -189,20 +187,32 @@ const Carousel = () => {
       transform: `translateX(${values.currentTranslate}px)`,
       transition: "",
     });
-    // setMargining(`${values.currentTranslate}px`);
-    // }
   }, [values.currentTranslate]);
 
   useEffect(() => {
     let m = checkMargin(current);
-    // setMargining(m);
     setTransformStyles({
       ...transformStyles,
       transform: `translateX(${m})`,
-      transition: "300ms ease-in-out",
+      transition: "0.2s ease-out",
     });
-    // setTransformStyles({ ...styles, transform: `translateX(m)px`, transition: "300ms ease-in-out" });
   }, [current]);
+
+  useEffect(() => {
+    const updateSlider = () => {
+      setCurrent((val) => {
+        if (val < images.length - 1) {
+          return val + 1;
+        } else {
+          return 0;
+        }
+      });
+    };
+    let id = setInterval(updateSlider, 2000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   const checkMargin = (cases: number): string => {
     switch (cases) {
@@ -256,9 +266,3 @@ const Carousel = () => {
 };
 
 export default Carousel;
-
-// {images.map((item, index) => {
-//   return (
-
-//   );
-// })}
