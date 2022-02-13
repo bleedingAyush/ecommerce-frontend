@@ -4,30 +4,30 @@ import "./Carousel.css";
 import Images from "./Images";
 
 interface Values {
-  isDragging: boolean;
   currentTranslate: number;
-  prevTranslate: number;
-  animationID: number;
-  currentIndex: number;
-  startPos: number;
+}
+
+interface TransformStyles {
+  transform: string;
+  transition: string;
 }
 
 const images = [Images.first, Images.second, Images.third, Images.fourth];
 
-const Carousel = () => {
-  const [margining, setMargining] = useState<string>("0%");
-  const [styles, setStyles] = useState({
+const styles = {
+  transformStyles: {
     transform: "",
     transition: "",
-  });
+  },
+};
+
+const Carousel = () => {
+  const [transformStyles, setTransformStyles] = useState<TransformStyles>(
+    styles.transformStyles
+  );
   const [current, setCurrent] = useState(0);
   const [values, setValues] = useState<Values>({
-    isDragging: false,
     currentTranslate: 0,
-    prevTranslate: 0,
-    animationID: 0,
-    currentIndex: 0,
-    startPos: 0,
   });
 
   const firstSlide = () => {
@@ -58,45 +58,38 @@ const Carousel = () => {
       if (isDragging) {
         const currentPosition = getPosition(event);
         const movedBy = currentPosition - startPos;
-
-        if (movedBy <= -100 && currentIndex < images.length - 1) {
+        const movement = checkMovement(movedBy);
+        console.log("movement", movement);
+        if (movement == "nextImage") {
           setCurrent(currentIndex + 1);
-        } else if (movedBy >= 100 && currentIndex > 0) {
+        } else if (movement == "previousImage") {
           setCurrent(currentIndex - 1);
         } else {
-          let cm = checkMargin(currentIndex);
-          // setMargining(cm);
-          setStyles({
-            ...styles,
-            transform: `translateX(${cm})`,
-            transition: "100ms ease-in-out",
-          });
+          resetImagePosition();
         }
       }
       isDragging = false;
+    };
 
-      // setCurrent(currentIndex + 1);
+    const checkMovement = (movedBy: any) => {
+      if (movedBy <= -50 && currentIndex < images.length - 1) {
+        return "nextImage";
+      } else if (movedBy >= 50 && currentIndex > 0) {
+        return "previousImage";
+      }
     };
 
     const touchMove = (event: any) => {
-      if (isDragging) {
-        const currentPosition = getPosition(event);
-        currentTranslate = currentPosition - startPos;
-        transformValue = parseInt(transform) + currentTranslate;
-        if (currentPosition - lastPageX > 0) {
-          if (transformValue > 0) {
-            return;
-          }
-        } else {
-          if (Math.abs(transformValue) > innerContainer.offsetWidth * 3) {
-            return;
-          }
-        }
-        setValues((val) => {
-          return { ...val, currentTranslate: transformValue };
-        });
-        lastPageX = getPosition(event);
-      }
+      if (!isDragging) return;
+      const currentPosition = getPosition(event);
+      currentTranslate = currentPosition - startPos;
+      transformValue = parseInt(transform) + currentTranslate;
+      const accessImageSwipe = checkAccessImageSwipe(currentPosition);
+      if (accessImageSwipe) return;
+      setValues((val) => {
+        return { ...val, currentTranslate: transformValue };
+      });
+      lastPageX = getPosition(event);
     };
 
     const touchStart = (index: number, img: any) => {
@@ -104,22 +97,53 @@ const Carousel = () => {
         isDragging = true;
         startPos = getPosition(event);
         currentIndex = index;
-        transform =
-          window
-            .getComputedStyle(innerContainer)
-            .getPropertyValue("transform") !== "none"
-            ? window
-                .getComputedStyle(innerContainer)
-                .getPropertyValue("transform")
-                .split(",")[4]
-            : 0;
+        transform = getComputedTransformStyle();
       };
     };
 
+    const resetImagePosition = () => {
+      let cm = checkMargin(currentIndex);
+      let transformStyle = {
+        ...transformStyles,
+        transform: `translateX(${cm})`,
+        transition: "0.2s ease-out",
+      };
+      setTransformStyles(transformStyle);
+    };
+
+    const checkAccessImageSwipe = (currentPosition: any) => {
+      if (currentPosition - lastPageX > 0) {
+        // prevents going left in access for the first image
+
+        if (transformValue > 0) {
+          return true;
+        }
+      } else {
+        // prevents going right in access for the second image
+
+        if (Math.abs(transformValue) > innerContainer.offsetWidth * 3) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const getComputedTransformStyle = (): string | number => {
+      return window
+        .getComputedStyle(innerContainer)
+        .getPropertyValue("transform") !== "none"
+        ? window
+            .getComputedStyle(innerContainer)
+            .getPropertyValue("transform")
+            .split(",")[4]
+        : 0;
+    };
+
     const getPosition = (event: MouseEvent & TouchEvent) => {
+      console.log("event", event);
       return event.type.includes("mouse")
         ? event.pageX
-        : event.touches[0].clientX;
+        : event.changedTouches[0].clientX;
     };
 
     const ImagesSelector = document.querySelectorAll(".images");
@@ -158,25 +182,37 @@ const Carousel = () => {
   }, []);
 
   useEffect(() => {
-    setStyles({
-      ...styles,
+    setTransformStyles({
+      ...transformStyles,
       transform: `translateX(${values.currentTranslate}px)`,
       transition: "",
     });
-    // setMargining(`${values.currentTranslate}px`);
-    // }
   }, [values.currentTranslate]);
 
   useEffect(() => {
     let m = checkMargin(current);
-    // setMargining(m);
-    setStyles({
-      ...styles,
+    setTransformStyles({
+      ...transformStyles,
       transform: `translateX(${m})`,
-      transition: "300ms ease-in-out",
+      transition: "0.2s ease-out",
     });
-    // setStyles({ ...styles, transform: `translateX(m)px`, transition: "300ms ease-in-out" });
   }, [current]);
+
+  useEffect(() => {
+    const updateSlider = () => {
+      setCurrent((val) => {
+        if (val < images.length - 1) {
+          return val + 1;
+        } else {
+          return 0;
+        }
+      });
+    };
+    let id = setInterval(updateSlider, 2000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   const checkMargin = (cases: number): string => {
     switch (cases) {
@@ -195,7 +231,7 @@ const Carousel = () => {
     <div className="carousel-container">
       <div className="carousel-slide">
         <div id="overflow">
-          <div className="inner" style={styles}>
+          <div className="inner" style={transformStyles}>
             <img src={images[0]} alt="" className="images" />
             <img src={images[1]} alt="" className="images" />
             <img src={images[2]} alt="" className="images" />
@@ -230,9 +266,3 @@ const Carousel = () => {
 };
 
 export default Carousel;
-
-// {images.map((item, index) => {
-//   return (
-
-//   );
-// })}
