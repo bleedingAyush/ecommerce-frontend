@@ -9,7 +9,11 @@ const Home = () => {
     accessKey: "OjKLVNBzevtX2EKTHPzIk7YF8xC2iXjc-Is_XXh6tx0",
   });
   const [medium, setState] = useState();
-  return <Carousel />;
+  return (
+    <>
+      <Carousel />
+    </>
+  );
 };
 
 export default Home;

@@ -1,7 +1,7 @@
-const first = require("../../assets/first.jfif");
-const second = require("../../assets/second.jfif");
-const third = require("../../assets/third.jfif");
-const fourth = require("../../assets/fourth.jfif");
+const first = require("../../assets/images/second.webp");
+const second = require("../../assets/images/fourth.webp");
+const third = require("../../assets/images/third.webp");
+const fourth = require("../../assets/images/fifth.jpg");
 
 const Images = {
   first,

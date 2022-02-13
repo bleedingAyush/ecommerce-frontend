@@ -163,6 +163,7 @@ h1 {
   transform: translateY(-10px);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out,
     padding 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  z-index: 1;
 }
 
 .side-menu button {
