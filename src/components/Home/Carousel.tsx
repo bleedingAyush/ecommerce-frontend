@@ -60,7 +60,7 @@ const Carousel = () => {
         const currentPosition = getPosition(event);
         const movedBy = currentPosition - startPos;
         const movement = checkMovement(movedBy);
-
+        console.log("movement", movement);
         if (movement == "nextImage") {
           setCurrent(currentIndex + 1);
         } else if (movement == "previousImage") {
@@ -141,9 +141,11 @@ const Carousel = () => {
     };
 
     const getPosition = (event: MouseEvent & TouchEvent) => {
+      console.log("event", event);
       return event.type.includes("mouse")
         ? event.pageX
-        : event.touches[0].clientX;
+        : event.changedTouches[0].clientX;
+      // : event.touches[0].clientX;
     };
 
     const ImagesSelector = document.querySelectorAll(".images");
