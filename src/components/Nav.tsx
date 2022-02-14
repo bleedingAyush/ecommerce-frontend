@@ -17,40 +17,42 @@ const Nav = () => {
     setSearchValue(e.target.value);
   }
 
-  function laptopClass() {
-    console.log(window.innerWidth);
-    if (window.innerWidth < 988) return;
-    const hamburgerButton = document.querySelector(".side-menu-button");
-    hamburgerButton?.classList.add("computer");
-  }
-
-  function removelaptopClass() {
-    if (window.innerWidth < 988) return;
-    const hamburgerButton = document.querySelector(".side-menu-button");
-    hamburgerButton?.classList.remove("computer");
-  }
-
-  const toggleSideMenu = () => {
-    if (window.innerWidth > 988) return;
-    const links = document.querySelector(".nav-text-links-content");
-    const isActive = links?.classList.contains("mobiles");
-
-    if (isActive) {
-      links?.classList.remove("mobiles");
+  const clicked = () => {
+    toggleClass(".side-menu-button", "active");
+    if (window.innerWidth > 988) {
+      toggleClass(".side-menu-button", "computer");
     } else {
-      links?.classList.add("mobiles");
+      toggleClass(".nav-text-links-content", "mobiles");
     }
   };
 
-  const removeMobilesClass = () => {
-    if (window.innerWidth > 988) return;
-    const links = document.querySelector(".nav-text-links-content");
-    links?.classList.remove("mobiles");
+  const toggleClass = (element: string, classname: string) => {
+    const documentSelector = document.querySelector(element);
+    const isActive = documentSelector?.classList.contains(classname);
+    if (isActive) {
+      documentSelector?.classList.remove(classname);
+    } else {
+      documentSelector?.classList.add(classname);
+    }
+  };
+
+  function removeClass(element: string, classname: string) {
+    const documentSelector = document.querySelector(element);
+    documentSelector?.classList.remove(classname);
+  }
+
+  const removeSideMenuClass = () => {
+    removeClass(".side-menu-button", "active");
+    if (window.innerWidth > 988) {
+      removeClass(".side-menu-button", "computer");
+    } else {
+      removeClass(".nav-text-links-content", "mobiles");
+    }
   };
 
   return (
     <nav>
-      <Link to={"/"} className="Link" onClick={removeMobilesClass}>
+      <Link to={"/"} className="Link" onClick={removeSideMenuClass}>
         <h1>tarlet</h1>
       </Link>
       <ul className="nav-menu">
@@ -59,7 +61,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/shop"}
             className="Link route-link"
-            onClick={removeMobilesClass}
+            onClick={removeSideMenuClass}
           >
             <li className="nav-item nav-link">Shop</li>
           </NavLink>
@@ -67,7 +69,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/journal"}
             className="Link route-link"
-            onClick={removeMobilesClass}
+            onClick={removeSideMenuClass}
           >
             <li className="nav-item nav-link">Journal</li>
           </NavLink>
@@ -75,7 +77,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/aboutus"}
             className="Link route-link"
-            onClick={removeMobilesClass}
+            onClick={removeSideMenuClass}
           >
             <li className="nav-item nav-link">About us</li>
           </NavLink>
@@ -83,7 +85,7 @@ const Nav = () => {
             activeClassName="active-link"
             to={"/contact"}
             className="Link route-link"
-            onClick={removeMobilesClass}
+            onClick={removeSideMenuClass}
           >
             <li className="nav-item nav-link">Contact</li>
           </NavLink>
@@ -106,12 +108,7 @@ const Nav = () => {
           <span className="cart-total">5</span>
         </Link>
         <div className="side-menu">
-          <button
-            onFocus={laptopClass}
-            onBlur={removelaptopClass}
-            className={"side-menu-button"}
-            onClick={toggleSideMenu}
-          >
+          <button className={"side-menu-button"} onClick={clicked}>
             <BarChart
               className="bar-chart"
               width={"1.5rem"}
@@ -119,18 +116,32 @@ const Nav = () => {
             />
           </button>
           <div className="dropdown">
-            <Link to="/shop" className="Link-dropdown">
-              <User />
-              <span>Account</span>
-            </Link>
-            <Link to="/jj" className="Link-dropdown">
-              <SBag />
-              <span>Orders</span>
-            </Link>
-            <Link to="/f" className="Link-dropdown">
-              <LogOut />
-              <span>Logout</span>
-            </Link>
+            <div className="drp-links">
+              <Link
+                to="/shop"
+                className="Link-dropdown"
+                onClick={removeSideMenuClass}
+              >
+                <User />
+                <span>Account</span>
+              </Link>
+              <Link
+                to="/jj"
+                className="Link-dropdown"
+                onClick={removeSideMenuClass}
+              >
+                <SBag />
+                <span>Orders</span>
+              </Link>
+              <Link
+                to="/f"
+                className="Link-dropdown"
+                onClick={removeSideMenuClass}
+              >
+                <LogOut />
+                <span>Logout</span>
+              </Link>
+            </div>
           </div>
         </div>
       </ul>
