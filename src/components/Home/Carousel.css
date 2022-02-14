@@ -37,8 +37,8 @@
 }
 
 .dots {
-  height: 12px;
-  width: 5px;
+  height: 0.75rem;
+  width: 0.31rem;
   border-radius: 50px;
   background-color: #ccc;
   margin-top: 10px;
