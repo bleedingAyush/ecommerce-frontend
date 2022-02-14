@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { ChevronLeft, ChevronRight } from "react-feather";
 import "./Carousel.css";
 import Images from "./Images";
 
@@ -230,14 +229,12 @@ const Carousel = () => {
   return (
     <div className="carousel-container">
       <div className="carousel-slide">
-        {/* <div id="overflow"> */}
         <div className="inner" style={transformStyles}>
           <img src={images[0]} alt="" className="images" />
           <img src={images[1]} alt="" className="images" />
           <img src={images[2]} alt="" className="images" />
           <img src={images[3]} alt="" className="images" />
         </div>
-        {/* </div> */}
       </div>
       <div className="toggle-dots-of-slider">
         <button
