@@ -166,6 +166,10 @@ h1 {
   z-index: 1;
 }
 
+.dropdown.active {
+  pointer-events: auto;
+}
+
 .side-menu button {
   background-color: transparent;
   border: none;
@@ -175,13 +179,25 @@ h1 {
   cursor: pointer;
 }
 
-.side-menu-button.computer:focus + .dropdown {
+.side-menu-button.active::after {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  width: 100vw;
+  border-radius: 2px;
+  top: -1.5rem;
+  height: 100vh;
+  cursor: context-menu;
+  right: -2.5rem;
+}
+
+.side-menu-button.computer + .dropdown {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
 
-.dropdown > .Link-dropdown {
+.dropdown .Link-dropdown {
   overflow: hidden;
   position: relative;
   color: rgb(59, 59, 59);
@@ -221,8 +237,10 @@ h1 {
     gap: 20px;
     flex-direction: column;
     width: 40%;
-    height: 93vh;
-    top: 5rem;
+    height: 100%;
+    top: 0rem;
+    padding-top: 5rem;
+    align-items: center;
     right: 0;
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
@@ -268,15 +286,5 @@ h1 {
 @media (max-width: 600px) {
   nav {
     padding: 0px 1rem 0px 1rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .searchBox:hover > .search-input {
-    width: 7rem;
-    padding: 0.5rem;
-    padding-right: 2rem;
-    background-color: rgb(240, 245, 248);
-    box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
   }
 }
