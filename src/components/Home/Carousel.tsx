@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useIsMounted from "../../Hooks/useIsMounted";
 import "./Carousel.css";
 import Images from "./Images";
 
@@ -21,6 +22,7 @@ const styles = {
 };
 
 const Carousel = () => {
+  const isMounted = useIsMounted();
   const [transformStyles, setTransformStyles] = useState<TransformStyles>(
     styles.transformStyles
   );
@@ -59,6 +61,7 @@ const Carousel = () => {
         const movedBy = currentPosition - startPos;
         const movement = checkMovement(movedBy);
         console.log("movement", movement);
+        if (!isMounted()) return;
         if (movement == "nextImage") {
           setCurrent(currentIndex + 1);
         } else if (movement == "previousImage") {
@@ -83,6 +86,7 @@ const Carousel = () => {
       const currentPosition = getPosition(event);
       currentTranslate = currentPosition - startPos;
       transformValue = parseInt(transform) + currentTranslate;
+      if (!isMounted()) return;
       const accessImageSwipe = checkAccessImageSwipe(currentPosition);
       if (accessImageSwipe) return;
       setValues((val) => {
@@ -139,7 +143,6 @@ const Carousel = () => {
     };
 
     const getPosition = (event: MouseEvent & TouchEvent) => {
-      console.log("event", event);
       return event.type.includes("mouse")
         ? event.pageX
         : event.changedTouches[0].clientX;
@@ -181,6 +184,7 @@ const Carousel = () => {
   }, []);
 
   useEffect(() => {
+    if (!isMounted()) return;
     setTransformStyles({
       ...transformStyles,
       transform: `translateX(${values.currentTranslate}px)`,
@@ -189,6 +193,7 @@ const Carousel = () => {
   }, [values.currentTranslate]);
 
   useEffect(() => {
+    if (!isMounted()) return;
     let m = checkMargin(current);
     setTransformStyles({
       ...transformStyles,
@@ -199,6 +204,7 @@ const Carousel = () => {
 
   useEffect(() => {
     const updateSlider = () => {
+      if (!isMounted()) return;
       setCurrent((val) => {
         if (val < images.length - 1) {
           return val + 1;
