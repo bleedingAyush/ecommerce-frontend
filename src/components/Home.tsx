@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Search } from "react-feather";
+import React from "react";
 import Carousel from "./Home/Carousel";
+<<<<<<< HEAD
 // import "./Home.css";
+=======
+>>>>>>> dev
 
 const Home = () => {
   return (
