@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { Search } from "react-feather";
+import React from "react";
 import Carousel from "./Home/Carousel";
-// import "./Home.css";
-import Unsplash, { createApi } from "unsplash-js";
 
 const Home = () => {
   return (

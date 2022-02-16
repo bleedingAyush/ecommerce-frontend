@@ -7,8 +7,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 
 function App() {
-  // const [value, setValue] = useState<string[]>([]);
-
   return (
     <Router>
       <div className="App">
