@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useIsMounted from "../../Hooks/useIsMounted";
 import "./Carousel.css";
-import Images from "./Images";
+import { Images } from "./Images";
 
 interface Values {
   currentTranslate: number;
@@ -213,7 +213,7 @@ const Carousel = () => {
         }
       });
     };
-    let id = setInterval(updateSlider, 2000);
+    let id = setInterval(updateSlider, 3000);
     return () => {
       clearInterval(id);
     };
