@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+::-webkit-slider-thumb {
+  border-radius: 10px;
+}
+
 :root {
   overflow-x: hidden;
 }
