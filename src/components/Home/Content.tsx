@@ -5,23 +5,24 @@ import IpadContent from "./IpadContent";
 import MobileContent from "./MobileContent";
 import SmallLaptop from "./SmallLaptop";
 import { contentImages } from "./Images";
+import { useLocation } from "react-router-dom";
 
 const Content = () => {
-  const [device, setDevices] = useState<string>("");
+  const [device, setDevices] = useState<string>("computer");
   const addDevice = (value: string) => setDevices(value);
-
+  const location = useLocation();
+  const handleResize = () => {
+    if (window.innerWidth <= 590) {
+      addDevice("mobile");
+    } else if (window.innerWidth > 590 && window.innerWidth <= 870) {
+      addDevice("ipad");
+    } else if (window.innerWidth > 870 && window.innerWidth <= 1220) {
+      addDevice("smallLaptop");
+    } else {
+      addDevice("computer");
+    }
+  };
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 590) {
-        addDevice("mobile");
-      } else if (window.innerWidth > 590 && window.innerWidth <= 870) {
-        addDevice("ipad");
-      } else if (window.innerWidth > 870 && window.innerWidth <= 1220) {
-        addDevice("smallLaptop");
-      } else {
-        addDevice("computer");
-      }
-    };
     window.addEventListener("resize", handleResize);
     window.addEventListener("load", handleResize);
     return () => {
@@ -29,6 +30,11 @@ const Content = () => {
       window.removeEventListener("load", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    handleResize();
+    console.log("Location changed");
+  }, [location]);
 
   return (
     <>
