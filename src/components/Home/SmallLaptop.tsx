@@ -1,7 +1,11 @@
 import React from "react";
 import "./Carousel.css";
 
-const SmallLaptop = ({ images }: any) => {
+interface Images {
+  images: string[];
+}
+
+const SmallLaptop: React.FC<Images> = ({ images }: Images) => {
   const eightImages = images.slice(2);
   return (
     <>

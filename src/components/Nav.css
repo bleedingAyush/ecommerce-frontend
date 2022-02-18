@@ -16,17 +16,19 @@ h1 {
 }
 
 .nav-link {
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
 }
 
 .Link {
   position: relative;
+  /* font-family: "Segoe UI"; */
+
   text-decoration: none;
 }
 
 .Link-dropdown > span {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .nav-menu {
@@ -81,6 +83,8 @@ h1 {
 }
 
 .search-input {
+  font-family: Helvetica;
+
   width: 0rem;
   padding: 0.5rem;
   padding-right: 2rem;
@@ -124,7 +128,7 @@ h1 {
   border-radius: 0.5rem;
   right: 15%;
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .shopping-bag {

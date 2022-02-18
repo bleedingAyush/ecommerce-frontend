@@ -1,6 +1,10 @@
 import React from "react";
 
-const IpadContent = ({ images }: any) => {
+interface Images {
+  images: string[];
+}
+
+const IpadContent: React.FC<Images> = ({ images }: Images) => {
   const sixImages = images.slice(4);
   return (
     <>
