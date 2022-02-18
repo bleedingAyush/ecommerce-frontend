@@ -1,7 +1,10 @@
 import React from "react";
 import "./Content.css";
+interface Images {
+  images: string[];
+}
 
-const ComputerContent = ({ images }: any) => {
+const ComputerContent: React.FC<Images> = ({ images }: Images) => {
   return (
     <>
       {images.map((item: any) => (

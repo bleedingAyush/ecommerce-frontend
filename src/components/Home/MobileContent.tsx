@@ -1,7 +1,11 @@
 import React from "react";
 import "./Content.css";
 
-const MobileContent = ({ images }: any) => {
+interface Images {
+  images: string[];
+}
+
+const MobileContent: React.FC<Images> = ({ images }: Images) => {
   const fourImages = images.slice(6);
   return (
     <>

@@ -4,10 +4,29 @@
   box-sizing: border-box;
 }
 
-::-webkit-slider-thumb {
-  border-radius: 10px;
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(233, 232, 232);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(196, 196, 196);
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(185, 184, 184);
 }
 
 :root {
   overflow-x: hidden;
+}
+
+@media (max-width: 1000px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 }
