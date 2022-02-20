@@ -6,11 +6,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: auto;
+  /* margin: auto; */
   padding: 0px 2.8rem 0px 2.8rem;
 }
 
-h1 {
+nav h1 {
   text-decoration: none;
   color: rgb(31, 30, 30);
 }
