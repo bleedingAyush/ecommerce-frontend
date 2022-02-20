@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 ::-webkit-scrollbar {
   width: 15px;
 }
