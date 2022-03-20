@@ -1,12 +1,13 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import "./App.css";
 import About from "./components/About";
 import Nav from "./components/Nav";
 import Shop from "./components/Shop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./components/Home";
 import Footer from "./components/Home/Footer";
-import Checkout from "./components/checkout/Checkout";
+
+const Home = lazy(() => import("./components/Home"));
+const Checkout = lazy(() => import("./components/checkout/Checkout"));
 
 function App() {
   return (
@@ -15,9 +16,11 @@ function App() {
         <Nav />
         <div>
           <Switch>
-            <Route exact path={"/"} component={Home} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Route exact path={"/"} component={Home} />
+              <Route path={"/checkout"} component={Checkout} />
+            </Suspense>
             <Route path={"/aboutus"} component={About} />
-            <Route path={"/checkout"} component={Checkout} />
             <Route path={"/shop"} component={Shop} />
           </Switch>
         </div>
