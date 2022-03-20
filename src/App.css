@@ -11,20 +11,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-<<<<<<< HEAD
-=======
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-.App {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto / 1em 1fr 1em;
-}
-
->>>>>>> a553432a1998d6392f20b223bb78697b05fae3a3
 ::-webkit-scrollbar {
   width: 15px;
 }
