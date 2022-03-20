@@ -210,10 +210,10 @@ const Carousel = () => {
         }
       });
     };
-    let id = setInterval(updateSlider, 3000);
-    return () => {
-      clearInterval(id);
-    };
+    // let id = setInterval(updateSlider, 3000);
+    // return () => {
+    //   clearInterval(id);
+    // };
   }, []);
 
   const checkMargin = (cases: number): string => {
