@@ -6,7 +6,6 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* margin: auto; */
   padding: 0px 2.8rem 0px 2.8rem;
 }
 
@@ -22,7 +21,6 @@ nav h1 {
 
 .Link {
   position: relative;
-  /* font-family: "Segoe UI"; */
 
   text-decoration: none;
 }
@@ -176,19 +174,6 @@ nav h1 {
 
 .side-menu button:hover {
   cursor: pointer;
-}
-
-.side-menu-button.active::after {
-  content: "";
-  position: absolute;
-  background-color: transparent;
-  width: 100vw;
-  border-radius: 2px;
-  top: -1.5rem;
-  height: 100vh;
-  cursor: context-menu;
-  right: -2.8rem;
-  z-index: 1;
 }
 
 .side-menu-button.computer + .dropdown {

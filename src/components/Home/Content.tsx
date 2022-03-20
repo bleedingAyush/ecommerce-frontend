@@ -14,9 +14,9 @@ const Content = () => {
   const handleResize = () => {
     if (window.innerWidth <= 590) {
       addDevice("mobile");
-    } else if (window.innerWidth > 590 && window.innerWidth <= 870) {
+    } else if (window.innerWidth > 590 && window.innerWidth < 870) {
       addDevice("ipad");
-    } else if (window.innerWidth > 870 && window.innerWidth <= 1220) {
+    } else if (window.innerWidth >= 870 && window.innerWidth <= 1220) {
       addDevice("smallLaptop");
     } else {
       addDevice("computer");
@@ -33,7 +33,6 @@ const Content = () => {
 
   useEffect(() => {
     handleResize();
-    console.log("Location changed");
   }, [location]);
 
   return (

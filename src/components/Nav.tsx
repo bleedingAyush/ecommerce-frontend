@@ -9,6 +9,7 @@ import {
 } from "react-feather";
 import "./Nav.css";
 import ShoppingBag from "./ShoppingBag";
+import useClickOutside from "../Hooks/useClickOutside";
 
 const Nav = () => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -18,7 +19,6 @@ const Nav = () => {
   }
 
   const clicked = () => {
-    toggleClass(".side-menu-button", "active");
     if (window.innerWidth > 988) {
       toggleClass(".side-menu-button", "computer");
     } else {
@@ -36,13 +36,20 @@ const Nav = () => {
     }
   };
 
+  const dropdownRef = useClickOutside(() => {
+    removeClass(".side-menu-button", "computer");
+  });
+
+  const navRef = useClickOutside(() => {
+    removeClass(".nav-text-links-content", "mobiles");
+  });
+
   function removeClass(element: string, classname: string) {
     const documentSelector = document.querySelector(element);
     documentSelector?.classList.remove(classname);
   }
 
   const removeSideMenuClass = () => {
-    removeClass(".side-menu-button", "active");
     if (window.innerWidth > 988) {
       removeClass(".side-menu-button", "computer");
     } else {
@@ -56,7 +63,7 @@ const Nav = () => {
         <h1>tarlet</h1>
       </Link>
       <ul className="nav-menu">
-        <div className="nav-text-links-content">
+        <div className="nav-text-links-content" ref={navRef}>
           <NavLink
             activeClassName="active-link"
             to={"/shop"}
@@ -100,14 +107,14 @@ const Nav = () => {
           />
           <Search className="searchSvg" width={"1.25rem"} height={"1.25rem"} />
         </div>
-        <Link to={"/conta"} className="Link shopping-bag">
+        <Link to={"/checkout"} className="Link shopping-bag">
           <ShoppingBag
             className="nav-item shop-bag"
             style={{ color: "#3a3a3a", display: "grid" }}
           />
           <span className="cart-total">5</span>
         </Link>
-        <div className="side-menu">
+        <div className="side-menu" ref={dropdownRef}>
           <button className={"side-menu-button"} onClick={clicked}>
             <BarChart
               className="bar-chart"
