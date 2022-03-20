@@ -2,16 +2,26 @@
 *::after,
 *::before {
   box-sizing: border-box;
+  /* Hides the blue background when clicked on a link */
+  -webkit-tap-highlight-color: transparent;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-<<<<<<< HEAD
-=======
-.App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
->>>>>>> dev
+
+.App {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto / 1em 1fr 1em;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }
@@ -31,10 +41,5 @@
 
 :root {
   overflow-x: hidden;
-}
-
-@media (max-width: 1000px) {
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
+  height: 100%;
 }

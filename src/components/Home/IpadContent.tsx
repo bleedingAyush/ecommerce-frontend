@@ -9,7 +9,7 @@ const IpadContent: React.FC<Images> = ({ images }: Images) => {
   return (
     <>
       {sixImages.map((item: any) => (
-        <div className="item">
+        <div className="item" key={item}>
           <img src={item} alt="" style={{ width: "100%", height: "100%" }} />
         </div>
       ))}
