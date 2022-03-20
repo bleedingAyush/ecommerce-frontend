@@ -4,14 +4,6 @@
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-=======
-.App {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
->>>>>>> dev
 ::-webkit-scrollbar {
   width: 15px;
 }
