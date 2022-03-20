@@ -45,15 +45,15 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    const innerContainer: any = document.querySelector(".inner");
+    const innerContainer = document.querySelector(".inner") as HTMLDivElement;
 
-    let isDragging = false,
-      startPos = 0,
-      currentTranslate = 0,
-      transformValue: any = 0,
+    let isDragging: boolean = false,
+      startPos: number = 0,
+      currentTranslate: number = 0,
+      transformValue: number = 0,
       transform: any = 0,
-      lastPageX: any = 0,
-      currentIndex = 0;
+      lastPageX: number = 0,
+      currentIndex: number = 0;
 
     const touchEnd = (event: any) => {
       if (isDragging) {
@@ -95,7 +95,7 @@ const Carousel = () => {
       lastPageX = getPosition(event);
     };
 
-    const touchStart = (index: number, img: any) => {
+    const touchStart = (index: number): any => {
       return function (event: any) {
         isDragging = true;
         startPos = getPosition(event);
@@ -114,7 +114,7 @@ const Carousel = () => {
       setTransformStyles(transformStyle);
     };
 
-    const checkAccessImageSwipe = (currentPosition: any) => {
+    const checkAccessImageSwipe = (currentPosition: number) => {
       if (currentPosition - lastPageX > 0) {
         // prevents going left in access for the first image
 
@@ -141,8 +141,8 @@ const Carousel = () => {
             .split(",")[4]
         : 0;
     };
-
-    const getPosition = (event: MouseEvent & TouchEvent) => {
+    // : MouseEvent & TouchEvent
+    const getPosition = (event: MouseEvent & TouchEvent): number => {
       return event.type.includes("mouse")
         ? event.pageX
         : event.changedTouches[0].clientX;
@@ -154,11 +154,11 @@ const Carousel = () => {
         e.preventDefault();
       });
 
-      firstImg?.addEventListener("touchstart", touchStart(index, firstImg));
+      firstImg?.addEventListener("touchstart", touchStart(index));
       firstImg?.addEventListener("touchmove", touchMove);
       firstImg?.addEventListener("touchend", touchEnd);
 
-      firstImg?.addEventListener("mousedown", touchStart(index, firstImg));
+      firstImg?.addEventListener("mousedown", touchStart(index));
       firstImg?.addEventListener("mousemove", touchMove);
       firstImg?.addEventListener("mouseleave", touchEnd);
       firstImg?.addEventListener("mouseup", touchEnd);
@@ -169,13 +169,10 @@ const Carousel = () => {
         firstImg?.removeEventListener("dragstart", (e) => {
           e.preventDefault();
         });
-        firstImg?.removeEventListener(
-          "touchstart",
-          touchStart(index, firstImg)
-        );
+        firstImg?.removeEventListener("touchstart", touchStart(index));
         firstImg?.removeEventListener("touchmove", touchMove);
         firstImg?.removeEventListener("touchend", touchEnd);
-        firstImg?.removeEventListener("mousedown", touchStart(index, firstImg));
+        firstImg?.removeEventListener("mousedown", touchStart(index));
         firstImg?.removeEventListener("mousemove", touchMove);
         firstImg?.removeEventListener("mouseleave", touchEnd);
         firstImg?.removeEventListener("mouseup", touchEnd);

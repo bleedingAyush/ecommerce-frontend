@@ -9,8 +9,8 @@ const MobileContent: React.FC<Images> = ({ images }: Images) => {
   const fourImages = images.slice(6);
   return (
     <>
-      {fourImages.map((item: any, index: number) => (
-        <div className="item">
+      {fourImages.map((item: any) => (
+        <div className="item" key={item}>
           <img src={item} style={{ width: "100%", height: "100%" }} alt="" />
         </div>
       ))}
